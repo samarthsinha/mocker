@@ -4,6 +4,7 @@ import com.bootup.mocker.dao.MockRequestResponse;
 import com.bootup.mocker.repository.MockRequestResponseDbService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,6 +64,13 @@ public class MockRestController {
     }else{
       responseEntity = new ResponseEntity<String>("{\"status\":\"error\",\"message\":\"No such mapping found\"}",HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    return responseEntity;
+  }
+
+  @GetMapping(value = {"/_mappings"})
+  public ResponseEntity<List<MockRequestResponse>> getAllMappings(HttpServletRequest request,HttpServletResponse response){
+    List<MockRequestResponse> allMockResponse = mockRequestResponseDbService.findAll();
+    ResponseEntity<List<MockRequestResponse>> responseEntity = new ResponseEntity<List<MockRequestResponse>>(allMockResponse,HttpStatus.OK);
     return responseEntity;
   }
 

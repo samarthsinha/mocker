@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -98,6 +99,11 @@ public class MockRequestResponseDbService {
       }
     }
     return byId;
+  }
+
+  public List<MockRequestResponse> findAll(){
+    List<MockRequestResponse> all = mongoTemplate.findAll(MockRequestResponse.class);
+    return all;
   }
 
 
